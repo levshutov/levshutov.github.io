@@ -19,7 +19,6 @@
         --text: #0f172a;
         --muted: #475569;
         --accent: #16a34a;
-        --warn: #d97706;
         --bad: #dc2626;
         --border: rgba(15, 23, 42, 0.10);
       }
@@ -88,9 +87,8 @@
         height: 54px;
       }
       .spin { animation: spin 1s linear infinite; }
-      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes spin { to { transform: rotate(-360deg); } }
       .ok { color: var(--accent); }
-      .warn { color: var(--warn); }
       .bad { color: var(--bad); }
       .list {
         margin-top: 8px;
