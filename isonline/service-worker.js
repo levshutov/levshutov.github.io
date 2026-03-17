@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_NAME = "isonline-v2";
+const CACHE_NAME = "yt-check-v1";
 const APP_SHELL = ["./", "./index.html", "./app.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -22,36 +22,46 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-// Network-first so reload pulls fresh assets; cache fallback for offline.
+// Offline-first for app shell, network for everything else.
 self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
   // Only handle same-origin navigations/assets.
   if (url.origin !== self.location.origin) return;
-  if (req.method !== "GET") return;
 
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
 
-      // Try network first to always refresh on reload.
-      try {
-        const fresh = await fetch(req, { cache: "no-store" });
-        if (fresh && fresh.ok) {
-          cache.put(req, fresh.clone()).catch(() => {});
+      // Navigation: serve cached index.html, update in background.
+      if (req.mode === "navigate") {
+        const cached = await cache.match("./index.html");
+        if (cached) {
+          event.waitUntil(
+            (async () => {
+              try {
+                const fresh = await fetch(req);
+                if (fresh && fresh.ok) await cache.put("./index.html", fresh.clone());
+              } catch {
+                // ignore
+              }
+            })()
+          );
+          return cached;
         }
-        return fresh;
-      } catch {
-        // Offline fallback.
-        if (req.mode === "navigate") {
-          const cachedIndex = await cache.match("./index.html");
-          if (cachedIndex) return cachedIndex;
-        }
-        const cached = await cache.match(req);
-        if (cached) return cached;
-        throw new Error("Offline and not cached");
       }
+
+      // Asset: cache-first.
+      const cached = await cache.match(req);
+      if (cached) return cached;
+
+      // Fallback to network, then cache if ok.
+      const res = await fetch(req);
+      if (res && res.ok) {
+        cache.put(req, res.clone()).catch(() => {});
+      }
+      return res;
     })()
   );
 });
