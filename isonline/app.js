@@ -47,7 +47,7 @@ async function fetchWithTimeout(url, { timeoutMs }) {
   try {
     // no-cors is intentional: most of these sites don't send CORS headers.
     // We only care whether the request can be made at all (reachable vs blocked).
-    const res = await fetch(url, {
+    const res = await fetch(url + "?" + Math.random(), {
       method: "GET",
       mode: "no-cors",
       cache: "no-store",
