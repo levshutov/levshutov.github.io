@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_NAME = "yt-check-v1";
-const APP_SHELL = ["./", "./index.html", "./app.js", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
+const CACHE_NAME = "isonline";
+const APP_SHELL = ["./", "./index.html", "./app.js", "./style.css", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

@@ -28,8 +28,6 @@
     <script src="./app.js"></script>
     
     <script>
-        const list = document.getElementById('serviceList');
-        
         for (const srv of SERVICES) {
             const html = `
                 <div class="item" data-service="${srv.id}">
@@ -41,7 +39,7 @@
                   </span>
                 </div>
             `;
-            list.insertAdjacentHTML('beforeend', html);
+            serviceList.insertAdjacentHTML('beforeend', html);
         }
         
         setAllIdle();

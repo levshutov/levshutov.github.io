@@ -8,6 +8,7 @@ const SERVICES = [
   { id: "google", name: "Google", url: "https://www.google.com/" },
   { id: "telegram", name: "Telegram", url: "https://web.telegram.org/" },
   { id: "youtube", name: "YouTube", url: "https://www.youtube.com/" },
+  { id: "github1mb", name: "GitHub 1MB", url: "https://levshutov.github.io/isonline/1mb.bin" },
 ];
 
 function getServiceEls(serviceId) {
