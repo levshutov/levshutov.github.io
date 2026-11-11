@@ -9,8 +9,6 @@ const SERVICES = [
   { id: "telegram", name: "Telegram", url: "https://web.telegram.org/" },
   { id: "youtube", name: "YouTube", url: "https://www.youtube.com/" },
   { id: "github1mb", name: "GitHub 1MB", url: "https://levshutov.github.io/isonline/1mb.bin" },
-  { id: "test1", name: "Test1", url: "https://httpbin.org/drip?numbytes=100&duration=10&delay=0&" },
-  { id: "test2", name: "Test2", url: "https://raw.githubusercontent.com/levshutov/levshutov.github.io/refs/heads/main/isonline/1mb.bin" },
 ];
 
 function getServiceEls(serviceId) {
