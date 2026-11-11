@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_NAME = "isonline-v1";
+const CACHE_NAME = "isonline-v2";
 const APP_SHELL = ["./", "./index.html", "./app.js", "./style.css", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -33,24 +33,6 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
-
-      // Navigation: serve cached index.html, update in background.
-      if (req.mode === "navigate") {
-        const cached = await cache.match("./index.html");
-        if (cached) {
-          event.waitUntil(
-            (async () => {
-              try {
-                const fresh = await fetch(req);
-                if (fresh && fresh.ok) await cache.put("./index.html", fresh.clone());
-              } catch {
-                // ignore
-              }
-            })()
-          );
-          return cached;
-        }
-      }
 
       // Asset: cache-first.
       const cached = await cache.match(req);
