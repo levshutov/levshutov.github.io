@@ -1,4 +1,4 @@
-const TIMEOUT_MS = 5000;
+const TIMEOUT_MS = 8000;
 
 const checkBtn = document.getElementById("checkBtn");
 const serviceList = document.getElementById("serviceList");
@@ -92,7 +92,7 @@ checkBtn.addEventListener("click", checkAll);
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", async () => {
     try {
-      await navigator.serviceWorker.register("./service-worker.js", { scope: "./" });
+      await navigator.serviceWorker.register("./service-worker.js", { updateViaCache: 'none', scope: "./" });
     } catch {
       // If SW fails, app still works (just not offline installable).
     }
